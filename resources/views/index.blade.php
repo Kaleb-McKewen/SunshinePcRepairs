@@ -9,4 +9,17 @@
 <x-text-img imgSide='left' imgName="gallery1.jpg" :txtArray="$textArray"/>
 <x-text-img imgSide='right' imgName="gallery2.jpg" :txtArray="$textArray2"/>
 
+<section class="py-10">
+    <a href="{{ route('blog') }}"><h1 class="text-2xl text-center font-bold">Read Our Blog Click Here</h1></a>
+    <h1 class="text-2xl text-center font-bold">Full of repairs and tips</h1>
+</section>
+
+<section class="py-10">
+    <x-googlemaps />
+</section>
+
+<section class="py-10">
+    <h1 class="text-2xl text-center font-bold">Add footer certifications</h1>
+</section>
+
 </x-layout>
