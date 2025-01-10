@@ -9,5 +9,8 @@ Route::get('/', function () {
 
 #Change to controller
 Route::get('/blog', [PostController::class, 'index'])->name('blog');
+Route::get('/blog/{post}', [PostController::class, 'show']);
 
 Route::view('/contact','contact')->name('contact');
+
+

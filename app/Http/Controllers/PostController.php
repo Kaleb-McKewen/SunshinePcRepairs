@@ -17,4 +17,8 @@ class PostController extends Controller
             //add tags
         ]);
     }
+
+    public function show(Post $post){
+        return view('components.post', ['post'=>$post]);
+    }
 }
