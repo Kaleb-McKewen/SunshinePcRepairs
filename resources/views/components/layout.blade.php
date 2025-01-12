@@ -26,8 +26,14 @@
                     <a href="#">About Us</a>
                     <a href="#">Portfolio</a>
                     <a href="{{ route('blog') }}">Blog</a>
-                    <!--Add Auth for login condition (signup/login)-->
+
+
+
                     @auth
+                        <!--If user is admin-->
+                        @if (auth()->user()->isAdmin())
+                            <a href="/blog/new">New Post</a>
+                        @endif
                         <form method="POST" action="/logout">
                             @csrf
                             @method('DELETE')
@@ -45,6 +51,11 @@
             </nav>
         </header>
     </div>
+    @if (session('message'))
+    <div class="flex justify-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+      <span class="font-medium">Success!</span> {{ session('message') }}
+    </div>
+  @endif
 
     {{ $slot }}
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 
@@ -18,6 +18,23 @@ class PostController extends Controller
 
     public function show(Post $post){
         return view('components.post', compact('post'));
+    }
+
+    public function create(){
+        return view('new-blog');
+    }
+
+    public function store(Request $request){
+        //rules
+        $postAttributes=$request->validate([
+            'title'=>['required'],
+            'text'=>['required'],
+        ]);
+        $postAttributes['user_id']=$request->user()->id;
+        //create post
+        Post::create($postAttributes);
+        //redirect
+        return redirect('/blog')->with('message', 'Post added successfully!');;
     }
 
     public function userPosts(User $user){
