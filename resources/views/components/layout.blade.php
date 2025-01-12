@@ -32,7 +32,8 @@
                     @auth
                         <!--If user is admin-->
                         @if (auth()->user()->isAdmin())
-                            <a href="/blog/new">New Post</a>
+                          <a href="/dashboard">Dashboard</a>
+                            <!--<a href="/blog/new">New Post</a>-->
                         @endif
                         <form method="POST" action="/logout">
                             @csrf
@@ -53,7 +54,13 @@
     </div>
     @if (session('message'))
     <div class="flex justify-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-      <span class="font-medium">Success!</span> {{ session('message') }}
+      <span class="font-medium">Success:</span> {{ session('message') }}
+    </div>
+  @endif
+
+  @if (session('bad_message'))
+    <div class="flex justify-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+      <span class="font-medium">Error:</span> {{ session('bad_message') }}
     </div>
   @endif
 

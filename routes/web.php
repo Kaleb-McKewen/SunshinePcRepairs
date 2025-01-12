@@ -19,6 +19,7 @@ Route::get('/blog', [PostController::class, 'index'])->name('blog');
 Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function(){
     Route::get('/blog/new', [PostController::class, 'create']);
     Route::post('/blog/new', [PostController::class, 'store']);
+    Route::get('/blog/manage', [PostController::class, 'viewAll']);
 });
 Route::get('/blog/{post}', [PostController::class, 'show']);
 Route::get('/blog/tag/{tag:name}', [TagController::class, 'show']);
@@ -37,3 +38,9 @@ Route::middleware('auth')->group(function(){
     Route::delete('logout', [SessionController::class, 'destroy']);
 });
 
+//managing
+Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function(){
+    
+    Route::delete('/blog/delete/{post}', [PostController::class, 'destroy']);
+    Route::view('/dashboard','components.manage.dashboard')->name('dashboard');
+});
