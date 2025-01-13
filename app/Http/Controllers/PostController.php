@@ -48,15 +48,53 @@ class PostController extends Controller
         return view('blog',compact('title', 'posts'));
     }
 
-    public function destroy(Request $request, Post $post){
-        
+    private function checkOwner(Request $request, Post $post){
         if (!$request->user()->id === $post->user_id){
-            return redirect('/')->with('bad_message', 'Not authorized!');
+            return false;
+        } else {
+            return true;
         }
-        $post->delete();
+    }
 
-        $posts = $request->user()->posts()->with('tags')->with('user')->get();
+    public function destroy(Request $request, Post $post){
+        if (!$this->checkOwner($request, $post)){
+            redirect('/')->with('bad_message', 'Not authorized!');
+        }
+        
+        $post->delete();
         return redirect('/blog/manage')->with('message', 'Deleted Successfully!');
+
+    }
+
+    public function editShow(Request $request, Post $post){
+        
+        if (!$this->checkOwner($request, $post)){
+            redirect('/')->with('bad_message', 'Not authorized!');
+        }
+        return view('components.manage.update-post', compact('post'));
+        
+    }
+
+    public function edit(Request $request, Post $post){
+        
+        if (!$this->checkOwner($request, $post)){
+            redirect('/')->with('bad_message', 'Not authorized!');
+        }
+        
+        //validate
+        $postAttributes=$request->validate([
+            'title'=>['required'],
+            'text'=>['required'],
+        ]);
+        
+        //find old post
+        $oldPost = Post::find($post->id);
+        //update values (update time is automatically done)
+        $oldPost->title=$postAttributes['title'];
+        $oldPost->text=$postAttributes['text'];
+        //save
+        $oldPost->save();
+        return redirect('/blog/manage')->with('message', 'Updated Successfully!');
 
     }
 }

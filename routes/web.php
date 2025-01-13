@@ -40,7 +40,8 @@ Route::middleware('auth')->group(function(){
 
 //managing
 Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function(){
-    
+    Route::get('/blog/edit/{post}', [PostController::class, 'editShow']);
+    Route::post('/blog/edit/{post}', [PostController::class, 'edit']);
     Route::delete('/blog/delete/{post}', [PostController::class, 'destroy']);
     Route::view('/dashboard','components.manage.dashboard')->name('dashboard');
 });

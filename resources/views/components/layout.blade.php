@@ -33,7 +33,6 @@
                         <!--If user is admin-->
                         @if (auth()->user()->isAdmin())
                           <a href="/dashboard">Dashboard</a>
-                            <!--<a href="/blog/new">New Post</a>-->
                         @endif
                         <form method="POST" action="/logout">
                             @csrf

@@ -9,7 +9,7 @@
         
     </div>
     <div class="flex flex-col md:flex-row justify-center">
-        <x-large-link link="#">Future Features</x-large-link>
+        <x-large-link link="/blog/new">New Post</x-large-link>
         <x-large-link link="#">Future Features</x-large-link>
     </div>
 </x-layout>
