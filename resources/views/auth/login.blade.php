@@ -6,7 +6,7 @@
     
     <x-forms.form method="POST" action="login"> <!-- add enctype="multipart/form-data" for upload-->
         <x-forms.input label="Email" name=email />
-        <x-forms.input label="Password" name="password" type="password" />
+        <x-forms.input label="Password" name="password" autocomplete="on" type="password" />
     
         <x-forms.button>Log In</x-forms.button>
     </x-forms.form>

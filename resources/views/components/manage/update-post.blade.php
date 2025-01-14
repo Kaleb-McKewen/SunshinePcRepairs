@@ -10,7 +10,9 @@
         <x-forms.input label="Title" name=title value="{{(old('title')) ? old('title') : $post->title}}" />
         <x-forms.textarea label="Post" name=text value="{{(old('post')) ? old('post') : $post->text}}" />
     
-        <x-forms.button>Submit</x-forms.button>
+            <x-forms.tags />
+
+        <x-forms.button>Update</x-forms.button>
     </x-forms.form>
     
     

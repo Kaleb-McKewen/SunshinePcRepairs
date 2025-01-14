@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 
 class PostController extends Controller
@@ -26,18 +27,38 @@ class PostController extends Controller
     }
 
     public function create(){
-        return view('new-blog');
+        return view('components.manage.new-blog');
     }
 
     public function store(Request $request){
         //rules
+        
         $postAttributes=$request->validate([
             'title'=>['required'],
             'text'=>['required'],
         ]);
+
         $postAttributes['user_id']=$request->user()->id;
         //create post
-        Post::create($postAttributes);
+        $post=Post::create($postAttributes);
+  
+        //tag section
+        $tags=$request->input("hidden-input-tags");
+        $tagArray=[];
+        //if tags
+        if ($tags != '[]'){
+            //turn to array
+            $tags = explode(',', $tags);
+            foreach ($tags as $tag){
+                $tagInstance=Tag::firstOrCreate([
+                    'name'=>$tag
+                ]);
+                array_push($tagArray, $tagInstance);
+            }
+            //attach tags
+            $post->tags()->attach($tagArray);
+        }
+        
         //redirect
         return redirect('/blog')->with('message', 'Post added successfully!');;
     }
