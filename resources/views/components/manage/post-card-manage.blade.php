@@ -28,6 +28,4 @@
 
     </article>
 
-    <!-- More posts... -->
-
 </div>

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class PostController extends Controller
 {
@@ -30,6 +31,34 @@ class PostController extends Controller
         return view('components.manage.new-blog');
     }
 
+    private function attachTag(Request $request, Post $post){
+        //tag section
+        $tags=$request->input("hidden-input-tags");
+        $tagArray=[];
+        
+        //if tags
+        if ($tags != '[]' && $tags){
+            
+            //turn to array
+            $tags = explode(',', $tags);
+            foreach ($tags as $tag){
+                $tagInstance=Tag::firstOrCreate([
+                    'name'=>$tag
+                ]);
+                
+                array_push($tagArray, $tagInstance->id);
+                
+            }
+            //dd($tagArray);
+            //attach tags
+            $post->tags()->sync($tagArray);
+        } else {
+            //used to delete any associate tags if user deletes all tags from existing post
+            $post->tags()->sync([]);
+        }
+        return;
+    }
+
     public function store(Request $request){
         //rules
         
@@ -42,22 +71,7 @@ class PostController extends Controller
         //create post
         $post=Post::create($postAttributes);
   
-        //tag section
-        $tags=$request->input("hidden-input-tags");
-        $tagArray=[];
-        //if tags
-        if ($tags != '[]'){
-            //turn to array
-            $tags = explode(',', $tags);
-            foreach ($tags as $tag){
-                $tagInstance=Tag::firstOrCreate([
-                    'name'=>$tag
-                ]);
-                array_push($tagArray, $tagInstance);
-            }
-            //attach tags
-            $post->tags()->attach($tagArray);
-        }
+        $this->attachTag($request, $post);
         
         //redirect
         return redirect('/blog')->with('message', 'Post added successfully!');;
@@ -92,7 +106,16 @@ class PostController extends Controller
         if (!$this->checkOwner($request, $post)){
             redirect('/')->with('bad_message', 'Not authorized!');
         }
-        return view('components.manage.update-post', compact('post'));
+        $tagsObject=$post->tags()->get();
+        //convert to correct type
+        $tags="";
+        foreach($tagsObject as $tag){
+            $name=$tag->name;
+            $tags.=$name.',';
+        }
+        $tags=mb_substr($tags, 0, -1);
+        
+        return view('components.manage.update-post', compact('post', 'tags'));
         
     }
 
@@ -115,6 +138,8 @@ class PostController extends Controller
         $oldPost->text=$postAttributes['text'];
         //save
         $oldPost->save();
+        
+        $this->attachTag($request, $oldPost);
         return redirect('/blog/manage')->with('message', 'Updated Successfully!');
 
     }
