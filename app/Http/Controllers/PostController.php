@@ -31,7 +31,7 @@ class PostController extends Controller
         return view('components.manage.new-blog');
     }
 
-    private function attachTag(Request $request, Post $post){
+    private function attachTag(Request $request, mixed $post){
         //tag section
         $tags=$request->input("hidden-input-tags");
         $tagArray=[];

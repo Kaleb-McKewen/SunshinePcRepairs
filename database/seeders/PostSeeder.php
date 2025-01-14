@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,6 +16,6 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $tags = Tag::factory()->count(3)->create();
-        Post::factory(5)->hasAttached($tags)->create();
+        Post::factory(5)->hasAttached($tags)->has(Comment::factory())->create();
     }
 }
