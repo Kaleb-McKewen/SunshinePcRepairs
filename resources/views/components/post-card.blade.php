@@ -20,7 +20,7 @@
             <p class="mt-5 line-clamp-3 text-sm/6">{{ $post->text }}</p>
           </div>
           <div class="relative mt-8 flex items-center gap-x-4">
-            <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="size-10 rounded-full bg-gray-50">
+            <img src="/images/{{ $post->user->image }}" alt="profile picture" class="size-14 rounded-full bg-gray-50">
             <div class="text-sm/6">
               <p class="font-semibold">
                 <a href="/blog/user/{{ $post->user->id }}">
@@ -28,7 +28,7 @@
                   {{ $post->user->name }}
                 </a>
               </p>
-              <p class="">Co-Founder / CTO</p>
+              <p>{{ $post->user->role }}</p>
             </div>
           </div>
         </article>

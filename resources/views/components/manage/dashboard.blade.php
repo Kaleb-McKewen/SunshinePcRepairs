@@ -10,6 +10,6 @@
     
     <div class="flex flex-col md:flex-row justify-center">
         <x-large-link link="/blog/manage">Manage Your Posts</x-large-link>
-        <x-large-link link="#">Future Features</x-large-link>
+        <x-large-link link="/dashboard/profile">Manage Admin Profile</x-large-link>
     </div>
 </x-layout>

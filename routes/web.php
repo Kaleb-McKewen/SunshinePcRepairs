@@ -54,4 +54,6 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function(){
     Route::view('/dashboard','components.manage.dashboard')->name('dashboard');
     Route::get('/dashboard/admin', [RegisteredUserController::class,'createAdmin']);
     Route::post('/dashboard/admin/{user}', [RegisteredUserController::class,'storeAdmin']);
+    Route::get('/dashboard/profile', [RegisteredUserController::class, 'viewAdmin']);
+    Route::Post('/dashboard/profile', [RegisteredUserController::class, 'updateAdmin']);
 });

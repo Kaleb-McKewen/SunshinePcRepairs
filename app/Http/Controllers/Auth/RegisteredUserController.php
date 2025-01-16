@@ -41,4 +41,32 @@ class RegisteredUserController extends Controller
         $user->save();
         return redirect()->back()->with(['message'=>'User promoted to admin']);
     }
+
+    public function viewAdmin(){
+        return view('components.manage.admin-profile');
+    }
+
+    public function updateAdmin(Request $request, User $user){
+        $user=Auth::user();
+        if($request->image){
+            $request->validate([
+                'image'=>['required', 'image']
+            ]);
+            $filename = time().'.'.$request->image->getClientOriginalExtension();$request->image->getClientOriginalName();
+            $request->image->move(public_path('images'), $filename);
+            $user->image=$filename;
+        }
+
+        $request->validate([
+            'role'=>['required', 'string']
+        ]);
+        
+
+        
+        /** @var \App\Models\User $user **/
+        $user->role=$request->role;
+        $user->save();
+
+        return view('components.manage.dashboard');
+    }
 }
