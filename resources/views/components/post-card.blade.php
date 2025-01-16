@@ -1,6 +1,6 @@
 @props(['post'])
 
-<div class=" py-3 flex flex-col m-auto max-w-3xl">
+<div class=" my-3 flex flex-col m-auto max-w-3xl">
     
         <article class="border-b flex basis-full flex-col items-start justify-between">
           <div class="flex items-center gap-x-4 text-xs">
@@ -33,7 +33,7 @@
           </div>
         </article>
         
-          <x-comments :comments="$post->comments" />
+          
         
         
   

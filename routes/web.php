@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\SessionController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
@@ -13,6 +14,7 @@ Route::get('/', function () {
 })->name('index');
 Route::view('/contact','contact')->name('contact');
 
+
 //blog
 Route::get('/blog', [PostController::class, 'index'])->name('blog');
 //auth admin
@@ -21,6 +23,15 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function(){
     Route::post('/blog/new', [PostController::class, 'store']);
     Route::get('/blog/manage', [PostController::class, 'viewAll']);
 });
+//auth
+Route::middleware('auth')->group(function(){
+    Route::delete('logout', [SessionController::class, 'destroy']);
+    //comments
+    Route::get('/blog/comment/new/{post}', [CommentController::class,'create'])->name('newComment');
+    Route::post('/blog/comment/new/{post}', [CommentController::class,'store'])->name('newCommentSubmit');
+    Route::delete('/blog/comment/{post}/{comment}/delete', [CommentController::class,'destroy'])->name('deleteComment');
+});
+
 Route::get('/blog/{post}', [PostController::class, 'show']);
 Route::get('/blog/tag/{tag:name}', [TagController::class, 'show']);
 Route::get('/blog/user/{user}', [PostController::class, 'userPosts']);
@@ -33,10 +44,7 @@ Route::middleware('guest')->group(function() {
     Route::post('login', [SessionController::class, 'store']);
 });
 
-//auth
-Route::middleware('auth')->group(function(){
-    Route::delete('logout', [SessionController::class, 'destroy']);
-});
+
 
 //managing
 Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function(){
@@ -45,3 +53,4 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function(){
     Route::delete('/blog/delete/{post}', [PostController::class, 'destroy']);
     Route::view('/dashboard','components.manage.dashboard')->name('dashboard');
 });
+
