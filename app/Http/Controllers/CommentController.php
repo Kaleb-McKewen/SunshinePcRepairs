@@ -36,12 +36,12 @@ class CommentController extends Controller
         return redirect('/blog/'.$post->id)->with(['message'=>'Comment make successfully']);
     }
 
-    public function destroy(Post $post, Comment $comment, Request $request){
+    public function destroy(Comment $comment, Request $request){
         if (!$this->checkOwner($request, $comment)){
             redirect('/')->with('bad_message', 'Not authorized!');
         }
         //view
         $comment->delete();
-        return redirect('/blog/'.$post->id)->with(['message'=>'Comment deleted successfully']);
+        return redirect()->back()->with(['message'=>'Comment deleted successfully']);
     }
 }

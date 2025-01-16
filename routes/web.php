@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function(){
     //comments
     Route::get('/blog/comment/new/{post}', [CommentController::class,'create'])->name('newComment');
     Route::post('/blog/comment/new/{post}', [CommentController::class,'store'])->name('newCommentSubmit');
-    Route::delete('/blog/comment/{post}/{comment}/delete', [CommentController::class,'destroy'])->name('deleteComment');
+    Route::delete('/blog/comment/{comment}/delete', [CommentController::class,'destroy'])->name('deleteComment');
 });
 
 Route::get('/blog/{post}', [PostController::class, 'show']);
@@ -52,5 +52,6 @@ Route::middleware(['auth', EnsureUserIsAdmin::class])->group(function(){
     Route::post('/blog/edit/{post}', [PostController::class, 'edit']);
     Route::delete('/blog/delete/{post}', [PostController::class, 'destroy']);
     Route::view('/dashboard','components.manage.dashboard')->name('dashboard');
+    Route::get('/dashboard/admin', [RegisteredUserController::class,'createAdmin']);
+    Route::post('/dashboard/admin/{user}', [RegisteredUserController::class,'storeAdmin']);
 });
-

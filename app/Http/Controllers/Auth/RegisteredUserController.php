@@ -30,4 +30,15 @@ class RegisteredUserController extends Controller
         //redirect
         return redirect('/');
     }
+
+    public function createAdmin(){
+        $users = User::where('is_admin','=','0')->get();
+        return view('auth.adminAdd', compact('users'));
+    }
+
+    public function storeAdmin(User $user){
+        $user->is_admin=1;
+        $user->save();
+        return redirect()->back()->with(['message'=>'User promoted to admin']);
+    }
 }

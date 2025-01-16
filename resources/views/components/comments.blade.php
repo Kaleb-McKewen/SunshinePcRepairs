@@ -9,7 +9,7 @@
         <p>{{ $comment->text }}</p>
         
         @if(auth()->user() && auth()->user()->id === $comment->user->id)
-        <form method="POST" action="{{ route('deleteComment', [$post,$comment]) }}">
+        <form method="POST" action="{{ route('deleteComment', [$comment]) }}">
             @csrf
             @method('DELETE')
             <button type="submit"
