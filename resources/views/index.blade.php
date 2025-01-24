@@ -10,8 +10,9 @@
 <x-text-img imgSide='right' imgName="gallery2.jpg" :txtArray="$textArray2"/>
 
 <section class="py-10">
-    <a href="{{ route('blog') }}"><h1 class="text-2xl text-center font-bold">Read Our Blog Click Here</h1></a>
-    <h1 class="text-2xl text-center font-bold">Full of repairs and tips</h1>
+    <h1 class="text-2xl text-center font-bold">Read Our Blog</h1>
+    <p class="text-center m-5"><a href="{{ route('blog') }}" class="text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> Click Here</a></p>
+    <h1 class="text-2xl text-center">Full of repairs and tips</h1>
 </section>
 
 <section class="py-10">
