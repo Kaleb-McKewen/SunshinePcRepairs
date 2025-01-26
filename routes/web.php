@@ -13,7 +13,8 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 Route::view('/contact','contact')->name('contact');
-
+Route::view('/about','about-us')->name('about');
+Route::view('/portfolio','portfolio')->name('portfolio');
 
 //blog
 Route::get('/blog', [PostController::class, 'index'])->name('blog');

@@ -23,8 +23,8 @@
                 <div class="flex gap-x-2 sm:gap-x-6 md:gap-x-8 text-lg/6 font-semibold text-black">
                     <a href="#">Services</a>
                     <a href="{{ route('contact') }}">Contact</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Portfolio</a>
+                    <a href="{{ route('about') }}">About Us</a>
+                    <a href="{{ route('portfolio') }}">Portfolio</a>
                     <a href="{{ route('blog') }}">Blog</a>
 
 
